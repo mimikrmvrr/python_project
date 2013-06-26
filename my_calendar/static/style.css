@@ -1,0 +1,77 @@
+body { 
+    background: #DDDDDD;
+    font: 14px "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+
+#wrapper, footer {
+    width: 720px;
+    margin: auto;
+}
+
+#wrapper {
+    overflow: auto;
+    margin-top: 20px;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.26);
+}
+
+section, header, footer {
+    padding: 10px;
+}
+
+header {
+    margin-bottom: -25px;
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+}
+
+footer p {
+    padding-left: 10px;
+}
+
+nav {
+    float: right;
+}
+
+section.post {
+    overflow: auto;
+    background: #006699;
+}
+
+section.post textarea, section.post input {
+    font: 16px "Lucida Grande", Arial, Helvetica, sans-serif;
+    float: left;
+}
+
+section.post textarea {
+    width: 600px;
+    padding: 10px;
+    margin-right: 10px;
+}
+
+form.login {
+    background: #DDD;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px auto;
+    overflow: auto;
+    width: 300px;
+}
+
+form.login p {
+    overflow: auto;
+}
+
+form.login label {
+    display: block;
+    width: 80px;
+    float: left;
+}
+
+a:hover {
+    text-decoration: underline !important;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}КАЛЕНДАР{% endblock %}</title>
+        <link rel="stylesheet" href="/static/style.css" type="text/css">
+    </head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <nav>
+                    {% if user.is_authenticated %}
+                    Здравей, <b><a href="/{{ user.username }}">{{ user.username }}</a></b>! |
+                    <a href="/logout">Изход</a>
+                    {% else %}
+                    <a href="/login">Влез в КАЛЕНДАР</a>
+                    {% endif %}
+                </nav>
+                <!---<h1><a href="../"></a></h1>-->
+            </header>
+
+            {% block body %}
+            Body goes here
+            {% endblock %}
+
+        </div>
+        <!--<footer>
+            <p><a href="http://fmi.py-bg.net">Python във ФМИ</a></p>
+        </footer>-->
+    </body>
+</html>

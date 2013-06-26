@@ -1,6 +1,6 @@
-# Django settings for python_project project.
+﻿# Django settings for python_project project.
 import os
-from os.path import dirname, join
+from os.path import dirname, join, abspath
 
 PROJECT_DIR = dirname(__file__)
 
@@ -104,6 +104,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -114,9 +115,7 @@ ROOT_URLCONF = 'python_project.urls'
 WSGI_APPLICATION = 'python_project.wsgi.application'
 
 TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    abspath(join(PROJECT_DIR, '..', 'my_calendar', 'templates')),
 )
 
 INSTALLED_APPS = (

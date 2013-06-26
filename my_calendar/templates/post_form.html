@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block body %}
+<section class="post">
+    <span class="errors">{{ form.errors.text.pop }}</span>
+    <form method="POST" action="/">
+        {% csrf_token %}
+        <div id="add_event">
+            <textarea name="title" rows="1" placeholder="Какво планираш?"></textarea>
+            <textarea name="start_time" rows="1" placeholder="Кога започва?"></textarea>
+            <textarea name="end_time" rows="1" placeholder="Край"></textarea>
+            <textarea name="location" rows="1" placeholder="Къде ще се състои?"></textarea>
+            <textarea name="description" rows="5" placeholder="Разкажи малко повече относно събитието"></textarea>
+        </div>
+        <input type="submit" value="Запиши!">
+    </form>
+</section>
+{% endblock %}
