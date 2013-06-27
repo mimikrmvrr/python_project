@@ -14,7 +14,7 @@ class Event(models.Model):
     groups = models.ManyToManyField(Group, related_name='events')
 
 
-class Commnent(models.Model):
+class Comment(models.Model):
     text = models.TextField(max_length=200)
     created = models.DateTimeField(default=datetime.now)
     creator = models.ForeignKey(User, related_name='commnents')

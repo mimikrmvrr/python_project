@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{% block title %}КАЛЕНДАР{% endblock %}</title>
+        <title>{% block title %}iTimeline: plan your future{% endblock %}</title>
         <link rel="stylesheet" href="/static/style.css" type="text/css">
     </head>
     <body>
@@ -9,13 +9,15 @@
             <header>
                 <nav>
                     {% if user.is_authenticated %}
-                    Здравей, <b><a href="/{{ user.username }}">{{ user.username }}</a></b>! |
-                    <a href="/logout">Изход</a>
+                    <b><a href="/{{ user.username }}">{{ user.first_name }} {{ user.last_name }}</a></b> | 
+                    <b><a href="/homepage">Home</a></b> | 
+                    <b><a href="/logout">Log out</a></b>
                     {% else %}
-                    <a href="/login">Влез в КАЛЕНДАР</a>
+                    <b><a href="/login">Log in</a></b> | 
+                    <b><a href="/register">Sign up</a></b>
                     {% endif %}
                 </nav>
-                <!---<h1><a href="../"></a></h1>-->
+                <h1>iTimeline</h1>
             </header>
 
             {% block body %}
@@ -23,8 +25,6 @@
             {% endblock %}
 
         </div>
-        <!--<footer>
-            <p><a href="http://fmi.py-bg.net">Python във ФМИ</a></p>
-        </footer>-->
+        <footer></footer>
     </body>
 </html>
