@@ -3,10 +3,8 @@
 {% block title %}iTimeline{% endblock %}
 
 {% block body %}
-<section>
-    <h2><a href="post_form.html">Създай ново събитие</a></h2>
-</section>
 <section id="news_feed">
+	{% if user.is_authenticated %}
     <div id="upcoming">
         <h2>Upcoming events</h2>
         {% for events in upcoming_events %}
@@ -20,7 +18,18 @@
         <span class="comment">{{ comment.text }} from {{ comment.creator}} on {{ comment.created | timesince }}</span>
         {% endfor %}
     </div>
+    {% else %}
+    <div id="promote_text">
+    	<h3>iTimeline: plan your future.</h3>
+    	<p>We help you schedule your time.</p>
+    	<p>Do you have an account?</p>
+    	<button type="button">Log in</button>
+    	<p>New to iTimeline?</p>
+    	<button type="button">Sign up</button>
+    </div>
+    {% endif %}
 </section>
+{% if user.is_authenticated %}
 <aside>
     <div id="month"></div>
     <button type="button">Events</button>
@@ -28,4 +37,5 @@
     <button type="button">Add a new event</button>
     <button type="button">Add a new group</button>
 </aside>
+{% endif %}
 {% endblock %}
