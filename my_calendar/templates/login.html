@@ -1,15 +1,11 @@
 {% extends "base.html" %}
 
-{% block body %}
-{% if form.errors %}
-<p>Потребителското име и парола не съвпадат. Опитайте отново!</p>
-{% endif %}
+{% block title %} iTimeline - Log in{% endblock title %}
 
+{% block body %}
 <form class="login" method="post">
     {% csrf_token %}
-    <p>{{ form.username.label_tag }}  {{ form.username }}</p>
-    <p>{{ form.password.label_tag }}  {{ form.password }}</p>
-    <input type="submit" value="Влез" />
-    <input type="hidden" name="next" value="{{ next }}" />
+    {{ form.as_p }}
+    <input type="submit" value="Login" />
 </form>
 {% endblock %}
