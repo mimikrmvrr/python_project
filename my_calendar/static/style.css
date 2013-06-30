@@ -1,9 +1,9 @@
 body { 
-    background: #ffedec;
+    background:  #ffedec;
     font: 14px "Lucida Grande", Arial, Helvetica, sans-serif;
 }
 
-#wrapper, footer {
+#wrapper {
     width: 720px;
     margin: auto;
 }
@@ -74,4 +74,20 @@ form.login label {
 
 a:hover {
     text-decoration: underline !important;
+}
+
+#logo {
+    margin-top: -10px;
+}
+
+#logo img{
+    width: 70px;
+    height: 70px;
+    float: left;
+}
+
+#logo h1 {
+    margin-left: 150px;
+    padding-top: 40px;
+    color: #df004f;
 }

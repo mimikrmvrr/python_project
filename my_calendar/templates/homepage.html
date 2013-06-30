@@ -20,12 +20,16 @@
     </div>
     {% else %}
     <div id="promote_text">
-    	<h3>iTimeline: plan your future.</h3>
+    	<h3>Plan your future.</h3>
     	<p>We help you schedule your time.</p>
     	<p>Do you have an account?</p>
-    	<button type="button">Log in</button>
+    	<form action="/login">
+            <input type="submit" value="Log in">
+        </form>
     	<p>New to iTimeline?</p>
-    	<button type="button">Sign up</button>
+        <form action="/registration">
+            <input type="submit" value="Sign up">
+        </form>
     </div>
     {% endif %}
 </section>

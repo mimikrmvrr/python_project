@@ -9,16 +9,19 @@
             <header>
                 <nav>
                     {% if user.is_authenticated %}
-                    <b><a href="/{{ user.username }}">{{ user.first_name }} {{ user.last_name }}</a></b> | 
-                    <b><a href="/homepage">Home</a></b> | 
+                    <b><a href="/{{ user.username }}">{{ user.first_name }} {{ user.last_name }}</a></b> | <b><a href="/homepage">Home</a></b> | 
                     <b><a href="/logout">Log out</a></b>
                     {% else %}
                     <b><a href="/login">Log in</a></b> | 
                     <b><a href="/register">Sign up</a></b>
                     {% endif %}
                 </nav>
-                <img sourse="/static/images/logo.png" />
-                <h1>iTimeline</h1>
+                <div id="logo">
+                    <a href="/">
+                        <img src="../static/images/logo.png" alt="iTimeline logo"/>
+                    </a>
+                    <h1>iTimeline</h1>
+                </div>                
             </header>
 
             {% block body %}
