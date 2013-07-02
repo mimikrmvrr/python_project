@@ -15,16 +15,14 @@ class SignupForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='Password:')
     password_check = forms.CharField(widget=forms.PasswordInput, label='Confirm password:')
 
-    def username_taken(self):
+    def clean_username(self):
         try:
             user = User.objects.get(username=self.cleaned_data['username'])
         except User.DoesNotExist:
             return self.cleaned_data['username']
         raise forms.ValidationError("This username is already taken. Please choose another.")
 
-    def password_matching(self):
+    def clean(self):
         if 'password' in self.cleaned_data and 'password_check' in self.cleaned_data:
             if self.cleaned_data['password_check'] != self.cleaned_data['password']:
                 raise forms.ValidationError("The passwords are different.")
-
-

@@ -87,6 +87,7 @@ class SignupView(FormView):
             user.first_name = form.cleaned_data['first_name']
         if 'last_name' in form.cleaned_data:
             user.last_name = form.cleaned_data['last_name']
+        user.save()
         success_url = user.username + '/'
         return HttpResponseRedirect(success_url)
 
