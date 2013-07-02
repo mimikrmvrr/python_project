@@ -2,7 +2,7 @@ from django.template.response import TemplateResponse
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
-from django.core.urlresolvers import reverse
+#from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormView
 from django.conf import settings
@@ -29,7 +29,7 @@ def homepage(request):
     #     form.user = request.user
     #     if form.is_valid():
     #         form.save()
-        news = [comment for comment in event.comments for event in request.user.events.all() 
+        news = [comment for event in request.user.events.all() for comment in event.comments
                 if comment.created > earlier_date((datetime.now() - timedelta(days=30)), request.user.last_login)]
     else:
         upcoming_events = []
@@ -49,12 +49,12 @@ class LoginView(FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
-                return HttpResponseRedirect(success_url)
+                return HttpResponseRedirect('/')
         else:
             return self.invalid_form()
 
     def invalid_form(self):
-        return HttpResponseRedirect(reverse('my_calendar.login'))
+        return HttpResponseRedirect('/error_login/')
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
@@ -88,12 +88,8 @@ class SignupView(FormView):
         if 'last_name' in form.cleaned_data:
             user.last_name = form.cleaned_data['last_name']
         user.save()
-        success_url = user.username + '/'
-        return HttpResponseRedirect(success_url)
+        #success_url = '/' + user.username + '/'
+        return HttpResponseRedirect('/')
 
     def invalid_form(self):
-        return HttpResponseRedirect(reverse('my_calendar.registration'))
-
-
-
-
+        return HttpResponseRedirect('/error_registration/')

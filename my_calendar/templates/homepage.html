@@ -7,16 +7,24 @@
 	{% if user.is_authenticated %}
     <div id="upcoming">
         <h2>Upcoming events</h2>
-        {% for events in upcoming_events %}
-        <span class="event_title"><h4><a href="/event{{ event.id }}">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h4></span>
-        {% endfor %}
+        {% if not upcoming_events %}
+        <p>There are not any upcoming events.</p>
+        {% else %}
+            {% for events in upcoming_events %}
+            <span class="event_title"><h4><a href="/event{{ event.id }}">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h4></span>
+            {% endfor %}
+        {% endif %}
     </div>
     <div id="news">
         <h2>News</h2>
-        {% for comment in news %}
-        <span class="news"><h5><a href="/event{{ event.id }}">{{ comment.event.title }} - {{ comment.event.start_time }} {% if comment.event.end_time %} to {{ comment.event.end_time }}{% endif %}</a></h5></span>
-        <span class="comment">{{ comment.text }} from {{ comment.creator}} on {{ comment.created | timesince }}</span>
-        {% endfor %}
+        {% if not news %}
+            <p>There is no recent news.</p>
+        {% else %}
+            {% for comment in news %}
+            <span class="news"><h5><a href="/event{{ event.id }}">{{ comment.event.title }} - {{ comment.event.start_time }} {% if comment.event.end_time %} to {{ comment.event.end_time }}{% endif %}</a></h5></span>
+            <span class="comment">{{ comment.text }} from {{ comment.creator}} on {{ comment.created | timesince }}</span>
+            {% endfor %}
+        {% endif %}
     </div>
     {% else %}
     <div id="promote_text">
@@ -34,12 +42,21 @@
     {% endif %}
 </section>
 {% if user.is_authenticated %}
-<aside>
+<aside id="home">
     <div id="month"></div>
-    <button type="button">Events</button>
-    <button type="button">Groups</button>
-    <button type="button">Add a new event</button>
-    <button type="button">Add a new group</button>
+    <form action="/login">
+            <input type="submit" value="Events">
+    </form>
+    <form action="/login">
+            <input type="submit" value="New event">
+    </form>
+    <form action="/login">
+            <input type="submit" value="Groups">
+    </form>
+    <form action="/login">
+            <input type="submit" value="New group">
+    </form>
 </aside>
+<div class="clear"></div>
 {% endif %}
 {% endblock %}

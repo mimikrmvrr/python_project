@@ -105,3 +105,19 @@ a:hover {
     padding-top: 40px;
     color: #df004f;
 }
+
+aside {
+    float: right;
+    width: 20%;
+    overflow: auto;
+    margin-top: -10000px;
+    padding-top: 10000px;
+}
+
+aside form {
+    padding: 5px;
+}
+
+.clear {
+    clear: both;
+}

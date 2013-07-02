@@ -26,3 +26,4 @@ class SignupForm(forms.Form):
         if 'password' in self.cleaned_data and 'password_check' in self.cleaned_data:
             if self.cleaned_data['password_check'] != self.cleaned_data['password']:
                 raise forms.ValidationError("The passwords are different.")
+        return self.cleaned_data
