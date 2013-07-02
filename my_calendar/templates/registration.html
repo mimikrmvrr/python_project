@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %} iTimeline - Registration</br>Create an account{% endblock title %}
+
+{% block body %}
+<form class="registration" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

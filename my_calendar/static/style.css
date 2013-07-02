@@ -29,10 +29,6 @@ header a {
     color: black;
 }
 
-footer p {
-    padding-left: 10px;
-}
-
 nav {
     float: right;
 }
@@ -72,6 +68,24 @@ form.login label {
     float: left;
 }
 
+form.registration{
+    background: #DDD;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px auto;
+    overflow: auto;
+    width: 300px;
+}
+
+form.registration p {
+    overflow: auto;
+}
+
+form.registration label {
+    display: block;
+    width: 80px;
+    float: left;
+}
 a:hover {
     text-decoration: underline !important;
 }

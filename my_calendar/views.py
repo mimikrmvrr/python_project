@@ -11,7 +11,7 @@ from datetime import datetime, timedelta, date
 
 
 from my_calendar.models import Event, Comment
-from my_calendar.forms import LoginForm
+from my_calendar.forms import LoginForm, SignupForm
 
 
 
@@ -49,12 +49,12 @@ class LoginView(FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
-                return HttpResponseRedirect('/')
+                return HttpResponseRedirect(success_url)
         else:
             return self.invalid_form()
 
     def invalid_form(self):
-        return HttpResponseRedirect(reverse('my_calendar:login'))
+        return HttpResponseRedirect(reverse('my_calendar.login'))
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
@@ -62,5 +62,37 @@ class LoginView(FormView):
         if form.is_valid():
             return self.valid_form(form)
         else:
-            return self.invalid_form(form)
+            return self.invalid_form()
+
+
+class SignupView(FormView):
+    form_class = SignupForm
+    template_name = 'registration.html'
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.save(form)
+        else:
+            return self.invalid_form()
+
+    def save(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = User.objects.create_user(username=form.cleaned_data['username'],
+                                         password=form.cleaned_data['password'],
+                                         email=form.cleaned_data['email'])
+        if 'first_name' in form.cleaned_data:
+            user.first_name = form.cleaned_data['first_name']
+        if 'last_name' in form.cleaned_data:
+            user.last_name = form.cleaned_data['last_name']
+        success_url = user.username + '/'
+        return HttpResponseRedirect(success_url)
+
+    def invalid_form(self):
+        return HttpResponseRedirect(reverse('my_calendar.registration'))
+
+
+
 
