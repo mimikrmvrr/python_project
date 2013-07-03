@@ -1,6 +1,6 @@
 ﻿from django.conf.urls import patterns, include, url
 from django.conf import settings
-from my_calendar.views import homepage, LoginView, SignupView, CreateEventView, event
+from my_calendar.views import homepage, LoginView, SignupView, CreateEventView #, event
 #import my_calendar.views
 # from django.contrib import admin
 # admin.autodiscover()
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^error_registration/$', SignupView.as_view(), name='error_registration'),
     url(r'^create_event/$', CreateEventView.as_view(), name='create_event'),
     url(r'^error_event/$', CreateEventView.as_view(), name='error_event'),
-    url(r'^events/(?P<event_id>\d+)/$', event, name='event'),
+#    url(r'^events/(\d+)/$', event, name='event'),
 #     # url(r'^logout/$', 'django.contrib.auth.views.logout', {'template_name': 'logout.html'}, name='logout'),
 )
 

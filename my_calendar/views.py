@@ -28,11 +28,6 @@ def homepage(request):
     if request.user.is_authenticated():
         now = datetime.utcnow().replace(tzinfo=utc)
         upcoming_events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=7)]
-    # form = NewHaikuForm(request.POST or None)
-    # if request.user.is_authenticated():
-    #     form.user = request.user
-    #     if form.is_valid():
-    #         form.save()
         news = [comment for event in request.user.events.all() for comment in event.comments.all()
                 if comment.created > earlier_date((now - timedelta(days=30)), request.user.last_login)]
     else:
@@ -41,8 +36,8 @@ def homepage(request):
     return TemplateResponse(request, 'homepage.html', locals())
 
 
-def event(request):
-    return TemplateResponse(request, 'event.html', locals())
+# def event(request):
+#     return TemplateResponse(request, 'event.html', locals())
 
 
 class LoginView(FormView):

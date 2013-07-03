@@ -3,9 +3,13 @@
 {% block title %} iTimeline - Log in{% endblock title %}
 
 {% block body %}
-<form class="login" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login" />
-</form>
+{% if user.is_authenticated %}
+	<p>You are already signed in as <a href="/">{{ user.first_name }} {{ user.last_name }}</a>.</p>
+{% else %}
+	<form class="login" method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <input type="submit" value="Login" />
+	</form>
+	{% endif %}
 {% endblock %}
