@@ -10,8 +10,8 @@
         {% if not upcoming_events %}
         <p>There are not any upcoming events.</p>
         {% else %}
-            {% for events in upcoming_events %}
-            <span class="event_title"><h4><a href="/event{{ event.id }}">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h4></span>
+            {% for event in upcoming_events %}
+            <span class="event_title"><h4><a href="/events/{{ event.id }}/">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h4></span>
             {% endfor %}
         {% endif %}
     </div>
@@ -44,16 +44,16 @@
 {% if user.is_authenticated %}
 <aside id="home">
     <div id="month"></div>
-    <form action="/login">
+    <form action="/events">
             <input type="submit" value="Events">
     </form>
-    <form action="/login">
+    <form action="/create_event">
             <input type="submit" value="New event">
     </form>
-    <form action="/login">
+    <form action="/groups">
             <input type="submit" value="Groups">
     </form>
-    <form action="/login">
+    <form action="/create_group">
             <input type="submit" value="New group">
     </form>
 </aside>

@@ -86,6 +86,26 @@ form.registration label {
     width: 80px;
     float: left;
 }
+
+form.new{
+    background: #DDD;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 20px auto;
+    overflow: auto;
+    width: 400px;
+}
+
+form.new p {
+    overflow: auto;
+}
+
+form.new label {
+    display: block;
+    width: 80px;
+    float: left;
+}
+
 a:hover {
     text-decoration: underline !important;
 }
@@ -110,8 +130,6 @@ aside {
     float: right;
     width: 20%;
     overflow: auto;
-    margin-top: -10000px;
-    padding-top: 10000px;
 }
 
 aside form {
@@ -120,4 +138,8 @@ aside form {
 
 .clear {
     clear: both;
+}
+
+.error p {
+    text-color: red;
 }

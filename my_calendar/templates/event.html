@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+    {% if user.is_authenticated %}
+    <div class="event">
+	    <div>
+	        <span class="event_title"><h2><a href="/event{{ event.id }}">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h2></span>
+	        <span class="info">{{ event.location }}</span>
+	    </div>
+    <p>{{ event.description|linebreaksbr }}</p>
+	</div>
+	{% else %}
+	    <div id="promote_text">
+    	<h3>Plan your future.</h3>
+    	<p>We help you schedule your time.</p>
+    	<p>Do you have an account?</p>
+    	<form action="/login">
+            <input type="submit" value="Log in">
+        </form>
+    	<p>New to iTimeline?</p>
+        <form action="/registration">
+            <input type="submit" value="Sign up">
+        </form>
+    </div>
+    {% endif %}
+{% endblock %}

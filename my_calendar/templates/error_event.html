@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %} iTimeline - Create a new event{% endblock title %}
+
+{% block body %}
+<div class="error">
+	<p>Incorrect input! Please try again!</p>
+</div>
+<form class="new" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit" />
+</form>
+{% endblock %}

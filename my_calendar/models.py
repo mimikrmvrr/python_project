@@ -17,5 +17,11 @@ class Event(models.Model):
 class Comment(models.Model):
     text = models.TextField(max_length=200)
     created = models.DateTimeField(default=datetime.now)
-    creator = models.ForeignKey(User, related_name='commnents')
-    event = models.ForeignKey(Event, related_name='commnents')
+    creator = models.ForeignKey(User, related_name='comments')
+    event = models.ForeignKey(Event, related_name='comments')
+
+
+# class MyTime(models.Model):
+#     time = models.TimeField()
+#     date = models.DateField()
+#     datetime = models.DateTimeField()
