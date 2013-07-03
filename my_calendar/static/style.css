@@ -143,3 +143,12 @@ aside form {
 .error p {
     text-color: red;
 }
+
+#min_comment {
+    font: 10px "Lucida Grande", Arial, Helvetica, sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}

@@ -22,7 +22,8 @@
         {% else %}
             {% for comment in news %}
             <span class="news"><h5><a href="/event{{ event.id }}">{{ comment.event.title }} - {{ comment.event.start_time }} {% if comment.event.end_time %} to {{ comment.event.end_time }}{% endif %}</a></h5></span>
-            <span class="comment">{{ comment.text }} from {{ comment.creator}} on {{ comment.created | timesince }}</span>
+            <span class="comment">{{ comment.text }} </br>
+                <p id="min_comment">from <a href="{{comment.creator.id}}">{{ comment.creator.first_name}} {{ comment.creator.last_name}}</a>  -  {{ comment.created | timesince }} ago</p></span>
             {% endfor %}
         {% endif %}
     </div>
