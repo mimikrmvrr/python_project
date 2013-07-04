@@ -62,6 +62,7 @@ def homepage(request):
     else:
         upcoming_events = []
         news = []
+    news.reverse()
     return TemplateResponse(request, 'homepage.html', locals())
 
 
@@ -82,6 +83,7 @@ def eventslist(request):
         dates = events_by_date.keys()
         events_lists_by_dates = [events_by_date[date] for date in dates]
         return TemplateResponse(request, 'eventslist.html', locals())
+
 
 def logout_view(request):
     logout(request)
