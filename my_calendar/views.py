@@ -67,7 +67,8 @@ def homepage(request):
 
 
 def eventpage(request, id):
-    event = Event.objects.filter(id=id)
+    events = Event.objects.filter(id=id)
+    event = events[0]
     return TemplateResponse(request, 'event.html', locals())
 
 
@@ -131,11 +132,11 @@ class SignupView(FormView):
         form_class = self.get_form_class()
         form = self.get_form(form_class)
         if form.is_valid():
-            return self.save(form)
+            return self.save(form, request)
         else:
             return self.invalid_form()
 
-    def save(self, form):
+    def save(self, form, request):
         username = form.cleaned_data['username']
         password = form.cleaned_data['password']
         user = User.objects.create_user(username=username,
@@ -146,6 +147,9 @@ class SignupView(FormView):
         if 'last_name' in form.cleaned_data:
             user.last_name = form.cleaned_data['last_name']
         user.save()
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
+        login(request, user)
         #success_url = '/' + user.username + '/'
         return HttpResponseRedirect('/')
 

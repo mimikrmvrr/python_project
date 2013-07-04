@@ -21,8 +21,9 @@
 </nav>
 <div class="clear"></div>
 {% endif %}
-<section id="news_feed">
+
 	{% if user.is_authenticated %}
+    <section id="news_feed">
     <div id="upcoming">
         <h2>Upcoming events</h2>
         {% if not upcoming_events %}
@@ -45,6 +46,7 @@
             {% endfor %}
         {% endif %}
     </div>
+    </section>
     {% else %}
     <div id="promote_text">
     	<h3>Plan your future.</h3>
@@ -59,7 +61,7 @@
         </form>
     </div>
     {% endif %}
-</section>
+
 
 {{ calendar }}
 {% endblock %}

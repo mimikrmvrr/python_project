@@ -2,6 +2,7 @@
 
 
 {% block body %}
+<section id="promote_text">
     {% if user.is_authenticated %}
     {% if event != None %}
     <div class="event">
@@ -15,7 +16,7 @@
     <p>The event can not be found.</p>
     {% endif %}
 	{% else %}
-	    <div id="promote_text">
+	    <div>
     	<h3>Plan your future.</h3>
     	<p>We help you schedule your time.</p>
         <p>Please log in</p>
@@ -28,4 +29,5 @@
         </form>
     </div>
     {% endif %}
+</section>
 {% endblock %}
