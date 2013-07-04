@@ -185,6 +185,6 @@ class CreateEventView(FormView):
                                       creator=request.user,
                                       event=event)
         #event.comment_set.add(comment)
-        return HttpResponseRedirect('/event' + str(event.id) + '/')
+        return HttpResponseRedirect('/events/' + str(event.id) + '/')
 
 
