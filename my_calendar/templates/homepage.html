@@ -11,7 +11,7 @@
         <p>There are not any upcoming events.</p>
         {% else %}
             {% for event in upcoming_events %}
-            <span class="event_title"><h4><a href="/events/{{ event.id }}/">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h4></span>
+            <span class="event_title"><h4><a href="/events/{{ event.id }}/">{{ event.title }} - {{ event.start_time }} to {{ event.end_time }}</a></h4></span>
             {% endfor %}
         {% endif %}
     </div>
@@ -60,4 +60,5 @@
 </aside>
 <div class="clear"></div>
 {% endif %}
+{{ calendar }}
 {% endblock %}

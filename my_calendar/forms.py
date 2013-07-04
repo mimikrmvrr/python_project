@@ -4,6 +4,9 @@ from django.forms.extras.widgets import SelectDateWidget
 from django.forms.widgets import SplitDateTimeWidget
 from django.contrib.admin import widgets
 from datetime import datetime, date
+from calendar import HTMLCalendar
+from itertools import groupby
+# from django.utils.html import conditional_escape
 
 #from my_calendar.widgets import JqSplitDateTimeWidget, JqSplitDateTimeField
 
@@ -96,3 +99,37 @@ class CreateEventForm(forms.Form):
 
 
 
+class CalendarForm(HTMLCalendar):
+
+    def __init__(self, events):
+        super(CalendarFrom, self).__init__()
+        self.events = self.group_by_day(events)
+
+    def formatday(self, day, weekday):
+        if day != 0:
+            cssclass = self.cssclass[weekday]
+            if date.today() == date(self.year, self.month, day):
+                cssclass += ' today'
+            if day in self.events:
+                cssclass += ' filled'
+                body = ['<ul>']
+                for event in self.events[day]:
+                    body.append('<li>')
+                    body.append('<a href="/events/%s/">' % event.id)
+                    body.append('%s' % event.title)
+                    body.append('</a></li>')
+                body.append("</ul>")
+                return self.day_cell(cssclass, '%d %s' % (day, ''.join(body)))
+            return self.day_cell(cssclass, day)
+        return self.day_cell('noday', '&nbsp;')
+
+    def formatmonth(self, year, month):
+        self.year, self.month = year, month
+        return super(CalendarForm, self).formatmonth(year, month)
+
+    def group_by_day(self, events):
+        time = lambda event: event.start_time
+        return dict([(day, list(events)) for day, events in groupby(event, time)])
+
+    def day_cell(self, cssclass, body):
+        return '<td class="%s">%s</td>' % (cssclass, body)

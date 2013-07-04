@@ -8,13 +8,42 @@ from django.views.generic.edit import FormView
 from django.conf import settings
 from django.utils.timezone import utc
 from datetime import datetime, timedelta, date
+# from django.shortcuts import render_to_response
+# from django.utils.safestring import mark_safe
+# from calendar import HTMLCalendar
+from itertools import groupby
+# from django.utils.html import conditional_escape
 # from pytz import timezone
 # import pytz
 
 
 from my_calendar.models import Event, Comment
-from my_calendar.forms import LoginForm, SignupForm, CreateEventForm
+from my_calendar.forms import LoginForm, SignupForm, CreateEventForm #, CalendarForm
 
+
+# def calendar(request, year, month):
+#     events = Events.objects.filter(year=year, month=month)
+#     cal = CalendarForm(events).formatmonth(year, month)
+#     return render_to_response('calendar.html', {'calendar': mark_safe(cal), })
+    # year, month = int(year), int(month)
+
+    # if change in ("next", "prev"):
+    #     now, delta_month = date(year, month, 15), timedelta(days=31)
+    #     if change == "prev":
+    #         delta_month = -delta_month
+    #     year, month = (now+delta_month).timetuple()[:2]
+
+    # cal = calendar.Calendar()
+    # month_days = cal.itermonthdays(year, month)
+    # year, month, day = time.localtime()[:3]
+    # month_list = [[]]
+    # week = 0
+
+    # for day in month_days:
+    #     events = False
+    #     current = False
+    #     if day:
+    #         events = Event.objects.filter(date_year=year, date_month=month, )
 
 
 def earlier_date(date1, date2):
@@ -36,8 +65,24 @@ def homepage(request):
     return TemplateResponse(request, 'homepage.html', locals())
 
 
-# def event(request):
-#     return TemplateResponse(request, 'event.html', locals())
+def eventpage(request, id):
+    event = Event.objects.filter(id=id)
+    return TemplateResponse(request, 'event.html', locals())
+
+
+def eventslist(request):
+        if request.user.is_authenticated():
+            now = datetime.utcnow().replace(tzinfo=utc)
+            events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=30)]
+        else:
+            events = []
+       # events.sort(key=lambda event: event.start_time)
+        time_function = lambda event: event.start_time
+        events_by_date = dict((day, list(events)) for day, events in groupby(events, time_function))
+        dates = events_by_date.keys()
+        events_lists_by_dates = [events_by_date[date] for date in dates]
+        return TemplateResponse(request, 'eventslist.html', locals())
+
 
 
 class LoginView(FormView):

@@ -3,18 +3,22 @@
 
 {% block body %}
     {% if user.is_authenticated %}
+    {% if event != None %}
     <div class="event">
 	    <div>
-	        <span class="event_title"><h2><a href="/event{{ event.id }}">{{ event.title }} - {{ event.start_time }} {% if event.end_time %} to {{ event.end_time }}{% endif %}</a></h2></span>
+	        <span class="event_title"><h2><a href="/events/{{ event.id }}">{{ event.title }} - {{ event.start_time }} to {{ event.end_time }}</a></h2></span>
 	        <span class="info">{{ event.location }}</span>
 	    </div>
     <p>{{ event.description|linebreaksbr }}</p>
 	</div>
+    {% else %}
+    <p>The event can not be found.</p>
+    {% endif %}
 	{% else %}
 	    <div id="promote_text">
     	<h3>Plan your future.</h3>
     	<p>We help you schedule your time.</p>
-    	<p>Do you have an account?</p>
+        <p>Please log in</p>
     	<form action="/login">
             <input type="submit" value="Log in">
         </form>

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}iTimeline{% endblock %}
+
+{% block body %}
+<section id="news_feed">
+	{% if user.is_authenticated %}
+    <div id="upcoming">
+        <h2>Events</h2>
+        {% if not events %}
+        <p>There are not any upcoming events in next 30 days.</p>
+        {% else %}
+            {% for day in dates %}
+            <span class="event_title"><h3>{{ day }} :</h3> </br>
+            {% for day_list in events_lists_by_dates %}
+            {% for event in day_list %}
+            <h4><a href="/events/{{ event.id }}/">{{ event.title }} - {{ event.start_time }} to {{ event.end_time }}</a></h4></span>
+            {% endfor %}
+            {% endfor %}
+            {% endfor %}
+        {% endif %}
+    </div>
+    {% else %}
+    <div id="promote_text">
+    	<h3>Plan your future.</h3>
+    	<p>We help you schedule your time.</p>
+    	<p>Do you have an account?</p>
+    	<form action="/login">
+            <input type="submit" value="Log in">
+        </form>
+    	<p>New to iTimeline?</p>
+        <form action="/registration">
+            <input type="submit" value="Sign up">
+        </form>
+    </div>
+    {% endif %}
+</section>
+
+{{ calendar }}
+{% endblock %}

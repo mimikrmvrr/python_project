@@ -9,7 +9,7 @@
             <header>
                 <nav>
                     {% if user.is_authenticated %}
-                    <b><a href="/{{ user.username }}">{{ user.first_name }} {{ user.last_name }}</a></b> | <b><a href="/">Home</a></b> | 
+                    <b>Hello, {{ user.first_name }} {{ user.last_name }}</b> | <b><a href="/">Home</a></b> | 
                     <b><a href="/logout">Log out</a></b>
                     {% else %}
                     <b><a href="/login">Log in</a></b> | 
