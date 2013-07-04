@@ -83,6 +83,10 @@ def eventslist(request):
         events_lists_by_dates = [events_by_date[date] for date in dates]
         return TemplateResponse(request, 'eventslist.html', locals())
 
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/')
+
 
 
 class LoginView(FormView):
