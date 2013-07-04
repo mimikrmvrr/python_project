@@ -8,6 +8,7 @@ from django.views.generic.edit import FormView
 from django.conf import settings
 from django.utils.timezone import utc
 from datetime import datetime, timedelta, date
+from django.views.decorators.http import require_http_methods
 # from django.shortcuts import render_to_response
 # from django.utils.safestring import mark_safe
 # from calendar import HTMLCalendar
@@ -18,7 +19,7 @@ from itertools import groupby
 
 
 from my_calendar.models import Event, Comment
-from my_calendar.forms import LoginForm, SignupForm, CreateEventForm, CreateGroupForm
+from my_calendar.forms import LoginForm, SignupForm, CreateEventForm, CreateGroupForm, PostCommentForm
 
 
 # def calendar(request, year, month):
@@ -95,6 +96,37 @@ def groups(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/')
+
+
+class PostCommentView(FormView):
+    form_class = PostCommentForm
+    template_name = 'event.html'
+
+    @require_http_methods("GET")
+    def get(self, request, id):
+        return eventpage(request, id)
+
+    def valid_form(self, form, request):
+        now = datetime.utcnow().replace(tzinfo=utc)
+        event = request.user.events.filter(id=id)[0]
+        comment = Comment.objects.create(text=form.cleaned_data['text'],
+                                         creator=request.user,
+                                         created=now)
+        comment.event.add(event)
+        comment.save()
+        return HttpResponseRedirect(request.path)
+
+    @require_http_methods("POSt")
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.valid_form(form, request)
+        else:
+            return self.invalid_form(request)
+
+    def invalid_form(self, request):
+        return HttpResponseRedirect(request.path)
 
 
 class LoginView(FormView):

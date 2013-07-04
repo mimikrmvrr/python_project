@@ -15,6 +15,13 @@ class LoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput, label='password')
 
 
+class PostCommentForm(forms.Form):
+    text = forms.CharField(widget=forms.Textarea, label='Comment')
+
+    def clean(self):
+        return self.cleaned_data
+
+
 class SignupForm(forms.Form):
     username = forms.CharField(label='Username:')
     first_name = forms.CharField(label='First name:')

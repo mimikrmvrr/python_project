@@ -1,6 +1,6 @@
 ﻿from django.conf.urls import patterns, include, url
 from django.conf import settings
-from my_calendar.views import homepage, LoginView, SignupView, CreateEventView, eventpage, eventslist, logout_view, groups, CreateGroupView
+from my_calendar.views import homepage, LoginView, SignupView, CreateEventView, eventslist, eventpage, logout_view, groups, CreateGroupView, PostCommentView
 #import my_calendar.views
 # from django.contrib import admin
 # admin.autodiscover()

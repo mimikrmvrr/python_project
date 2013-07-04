@@ -16,6 +16,11 @@
         </i>{{ comment.creator.first_name }} {{ comment.creator.last_name }} - {{ comment.created | timesince }} ago
     {% endfor %}
 	</div>
+   <!--  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Submit comment" />
+    </form> -->
     {% else %}
     <p>The event can not be found.</p>
     {% endif %}
