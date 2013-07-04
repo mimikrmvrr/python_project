@@ -84,6 +84,20 @@ def eventslist(request):
         events_lists_by_dates = [events_by_date[date] for date in dates]
         return TemplateResponse(request, 'eventslist.html', locals())
 
+def groups(request):
+    groupslist = request.user.groups.all()
+    return TemplateResponse(request, 'groupslist.html', locals())
+#         if request.user.is_authenticated():
+#             events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=30)]
+#         else:
+#             events = []
+#        # events.sort(key=lambda event: event.start_time)
+#         time_function = lambda event: event.start_time
+#         events_by_date = dict((day, list(events)) for day, events in groupby(events, time_function))
+#         dates = events_by_date.keys()
+#         events_lists_by_dates = [events_by_date[date] for date in dates]
+#         return TemplateResponse(request, 'eventslist.html', locals())
+
 
 def logout_view(request):
     logout(request)

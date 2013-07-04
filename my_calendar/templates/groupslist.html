@@ -6,17 +6,12 @@
 <section id="news_feed">
 	{% if user.is_authenticated %}
     <div id="upcoming">
-        <h2>Events</h2>
-        {% if not events %}
-        <p>There are not any upcoming events in next 30 days.</p>
+        <h2>Groups</h2>
+        {% if not groupslist %}
+        <p>You are not in any groups yet.</p>
         {% else %}
-            {% for day in dates %}
-            <span class="event_title"><h3>{{ day }} :</h3> </br>
-            {% for day_list in events_lists_by_dates %}
-            {% for event in day_list %}
-            <h4><a href="/events/{{ event.id }}/">{{ event.title }} - {{ event.start_time }} to {{ event.end_time }}</a></h4></span>
-            {% endfor %}
-            {% endfor %}
+            {% for group in groupslist %}
+            <span class="event_title"><a href="/groups/{{ group.id }}"><h3>{{ group.name }}</h3></a></span>
             {% endfor %}
         {% endif %}
     </div>
