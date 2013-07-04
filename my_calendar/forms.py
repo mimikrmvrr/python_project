@@ -41,9 +41,9 @@ class CreateEventForm(forms.Form):
     title = forms.CharField(label="Name:")
     start_time = forms.DateTimeField(label='When?', widget=SelectDateWidget)
     end_time = forms.DateTimeField(label="End:", widget=SelectDateWidget)  
-    location = forms.CharField(label="Where?")  
-    description = forms.CharField(label="Add more info", widget=forms.Textarea)
-    group = forms.CharField(label='Group:')
+    location = forms.CharField(label="Where?", required=False)  
+    description = forms.CharField(label="Add more info", widget=forms.Textarea, required=False)
+    group = forms.CharField(label='Group:', required=False)
     
     def clean(self):
         # if self.cleaned_data['end_time'] and self.cleaned_data['start_time']:

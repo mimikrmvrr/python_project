@@ -90,7 +90,6 @@ def logout_view(request):
     return HttpResponseRedirect('/')
 
 
-
 class LoginView(FormView):
     form_class = LoginForm
     template_name = 'login.html'
@@ -174,14 +173,11 @@ class CreateEventView(FormView):
         for attribute in form.cleaned_data:
             if attribute not in ['group', 'start_time', 'end_time']:
                 setattr(event, attribute, form.cleaned_data[attribute])
-        # if 'description' in form.cleaned_data:
-        #     event.description = form.cleaned_data['description']
-        # if 'group' in form.cleaned_data:
-        #     event.groups.add(form.cleaned_data['group'])
-        # if 'end_time' in form.cleaned_data:
-        #     event.end_time = form.cleaned_data['end_time']
-        # if 'location' in form.cleaned_data:
-        #     event.location = form.cleaned_data['location']
+        if 'group' in form.cleaned_data:
+            for group in request.user.groups.filter(name=form.cleaned_data['group']):
+                event.groups.add(group)
+                for user in group.user_set.all():
+                    event.people.add(user)
         event.save()
         comment = Comment.objects.create(text='I created this event.',
                                       creator=request.user,
