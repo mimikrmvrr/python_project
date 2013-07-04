@@ -3,6 +3,24 @@
 {% block title %}iTimeline{% endblock %}
 
 {% block body %}
+{% if user.is_authenticated %}
+<nav id="home">
+<!--     <div id="month"></div> -->
+    <form action="/events">
+            <input type="submit" value="Events">
+    </form>
+    <form action="/create_event">
+            <input type="submit" value="New event">
+    </form>
+    <form action="/groups">
+            <input type="submit" value="Groups">
+    </form>
+    <form action="/create_group">
+            <input type="submit" value="New group">
+    </form>
+</nav>
+<div class="clear"></div>
+{% endif %}
 <section id="news_feed">
 	{% if user.is_authenticated %}
     <div id="upcoming">
@@ -42,23 +60,6 @@
     </div>
     {% endif %}
 </section>
-{% if user.is_authenticated %}
-<aside id="home">
-    <div id="month"></div>
-    <form action="/events">
-            <input type="submit" value="Events">
-    </form>
-    <form action="/create_event">
-            <input type="submit" value="New event">
-    </form>
-    <form action="/groups">
-            <input type="submit" value="Groups">
-    </form>
-    <form action="/create_group">
-            <input type="submit" value="New group">
-    </form>
-</aside>
-<div class="clear"></div>
-{% endif %}
+
 {{ calendar }}
 {% endblock %}

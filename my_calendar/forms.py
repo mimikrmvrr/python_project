@@ -60,6 +60,18 @@ class CreateEventForm(forms.Form):
     #         raise forms.ValidationError("Please add the name of the event.")
 
 
+class CreateGroupForm(forms.Form):
+    name = forms.CharField(label="Name:")
+    users = forms.CharField(label='Members:', required=False)
+    
+    def clean(self):
+        return self.cleaned_data
+
+    def clean_name(self):
+        if not self.cleaned_data['name']:
+            raise forms.ValidationError("Please add the name of the group.")
+
+
 # class MyTimeForm(forms.ModelForm):
 #     class Meta:
 #         model = MyTime

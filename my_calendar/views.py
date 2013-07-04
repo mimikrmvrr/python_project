@@ -1,6 +1,6 @@
 from django.template.response import TemplateResponse
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import get_object_or_404
 #from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
@@ -18,7 +18,7 @@ from itertools import groupby
 
 
 from my_calendar.models import Event, Comment
-from my_calendar.forms import LoginForm, SignupForm, CreateEventForm #, CalendarForm
+from my_calendar.forms import LoginForm, SignupForm, CreateEventForm, CreateGroupForm
 
 
 # def calendar(request, year, month):
@@ -84,19 +84,10 @@ def eventslist(request):
         events_lists_by_dates = [events_by_date[date] for date in dates]
         return TemplateResponse(request, 'eventslist.html', locals())
 
+
 def groups(request):
     groupslist = request.user.groups.all()
     return TemplateResponse(request, 'groupslist.html', locals())
-#         if request.user.is_authenticated():
-#             events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=30)]
-#         else:
-#             events = []
-#        # events.sort(key=lambda event: event.start_time)
-#         time_function = lambda event: event.start_time
-#         events_by_date = dict((day, list(events)) for day, events in groupby(events, time_function))
-#         dates = events_by_date.keys()
-#         events_lists_by_dates = [events_by_date[date] for date in dates]
-#         return TemplateResponse(request, 'eventslist.html', locals())
 
 
 def logout_view(request):
@@ -196,7 +187,42 @@ class CreateEventView(FormView):
         comment = Comment.objects.create(text='I created this event.',
                                       creator=request.user,
                                       event=event)
-        #event.comment_set.add(comment)
+        event.comment_set.add(comment)
+        event.save()
         return HttpResponseRedirect('/events/' + str(event.id) + '/')
 
+
+class CreateGroupView(FormView):
+    form_class = CreateGroupForm
+    template_name = 'create_group.html'
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            return self.valid_form(form, request)
+        else:
+            return self.invalid_form() 
+
+    def invalid_form(self):
+        return HttpResponseRedirect('/error_group/')
+
+    def valid_form(self, form, request):
+        group = Group.objects.create(name=form.cleaned_data['name'])
+        group.user_set.add(request.user)
+        # for attribute in form.cleaned_data:
+        #     if attribute not in ['group', 'start_time', 'end_time']:
+        #         setattr(event, attribute, form.cleaned_data[attribute])
+        # if form.cleaned_data['users']:
+        #     for user in User.objects.filter(name=form.cleaned_data['group']):
+        #         event.groups.add(group)
+        #         for user in group.user_set.all():
+        #             event.people.add(user)
+        group.save()
+        # comment = Comment.objects.create(text='I created this event.',
+        #                               creator=request.user,
+        #                               event=event)
+        # event.comment_set.add(comment)
+        # event.save()
+        return HttpResponseRedirect('/groups/' + str(group.id) + '/')
 
