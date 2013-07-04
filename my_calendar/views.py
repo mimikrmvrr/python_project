@@ -69,6 +69,7 @@ def homepage(request):
 def eventpage(request, id):
     events = Event.objects.filter(id=id)
     event = events[0]
+    comments = event.comments.all()
     return TemplateResponse(request, 'event.html', locals())
 
 

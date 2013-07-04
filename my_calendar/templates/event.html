@@ -11,6 +11,10 @@
 	        <span class="info">{{ event.location }}</span>
 	    </div>
     <p>{{ event.description|linebreaksbr }}</p>
+    {% for comment in comments %}
+    <p><i>{{ comment.text|linebreaksbr }} </br>
+        </i>{{ comment.creator.first_name }} {{ comment.creator.last_name }} - {{ comment.created | timesince }} ago
+    {% endfor %}
 	</div>
     {% else %}
     <p>The event can not be found.</p>
