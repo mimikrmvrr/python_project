@@ -6,9 +6,6 @@ from django.contrib.admin import widgets
 from datetime import datetime, date
 from calendar import HTMLCalendar
 from itertools import groupby
-# from django.utils.html import conditional_escape
-
-#from my_calendar.widgets import JqSplitDateTimeWidget, JqSplitDateTimeField
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='username')
@@ -53,18 +50,7 @@ class CreateEventForm(forms.Form):
     group = forms.CharField(label='Group:', required=False)
     
     def clean(self):
-        # if self.cleaned_data['end_time'] and self.cleaned_data['start_time']:
-        #     if self.cleaned_data['end_time'] < self.cleaned_data['start_time']:
-        #         raise forms.ValidationError("The end must be after the begining.")
         return self.cleaned_data
-
-    # def clean_start_time(self):
-    #     if not self.cleaned_data['start_time']:
-    #         raise forms.ValidationError("Please add when the start time of the event.")
-
-    # def clean_title(self):
-    #     if not self.cleaned_data['title']:
-    #         raise forms.ValidationError("Please add the name of the event.")
 
 
 class CreateGroupForm(forms.Form):
@@ -77,45 +63,6 @@ class CreateGroupForm(forms.Form):
     def clean_name(self):
         if not self.cleaned_data['name']:
             raise forms.ValidationError("Please add the name of the group.")
-
-
-# class MyTimeForm(forms.ModelForm):
-#     class Meta:
-#         model = MyTime
-
-#     def __init__(self, *args, **kwargs):
-#         super(MyTime, self).__init__(*args, **kwargs)
-#         self.fields['date'].widget = widgets.AdminDateWidget()
-#         self.fields['time'].widget = widgets.AdminTimeWidget()
-#         self.fields['datetime'].widget = widgets.AdminSplitDateWidget()
-
-
-# class SplitSelectDateTimeWidget(MultiWidget):
-#     """
-#     MultiWidget = A widget that is composed of multiple widgets.
-
-#     This class combines SelectTimeWidget and SelectDateWidget so we have something 
-#     like SpliteDateTimeWidget (in django.forms.widgets), but with Select elements.
-#     """
-#     def __init__(self, attrs=None, hour_step=None, minute_step=None, second_step=None, twelve_hr=None, years=None):
-#         widgets = (SelectDateWidget(attrs=attrs, years=years), SelectTimeWidget(attrs=attrs, hour_step=hour_step, minute_step=minute_step, second_step=second_step, twelve_hr=twelve_hr))
-#         super(SplitSelectDateTimeWidget, self).__init__(widgets, attrs)
-
-#     def decompress(self, value):
-#         if value:
-#             return [value.date(), value.time().replace(microsecond=0)]
-#         return [None, None]
-
-#     def format_output(self, rendered_widgets):
-#         """
-#         Given a list of rendered widgets (as strings), it inserts an HTML
-#         linebreak between them.
-        
-#         Returns a Unicode string representing the HTML for the whole lot.
-#         """
-#         rendered_widgets.insert(-1, '<br/>')
-#         return u''.join(rendered_widgets)
-
 
 
 class CalendarForm(HTMLCalendar):
