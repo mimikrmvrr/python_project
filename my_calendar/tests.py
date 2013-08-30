@@ -33,3 +33,4 @@ class ClientTest(TestCase):
         c = Client()
         response = c.post('login/')
         self.assertEqual(response.status_code, 200)
+
