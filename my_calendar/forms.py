@@ -7,6 +7,7 @@ from datetime import datetime, date
 from calendar import HTMLCalendar
 from itertools import groupby
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(label='username')
     password = forms.CharField(widget=forms.PasswordInput, label='password')
@@ -25,18 +26,22 @@ class SignupForm(forms.Form):
     last_name = forms.CharField(label='Last name:')
     email = forms.EmailField(label='E-mail:')
     password = forms.CharField(widget=forms.PasswordInput, label='Password:')
-    password_check = forms.CharField(widget=forms.PasswordInput, label='Confirm password:')
+    password_check = forms.CharField(widget=forms.PasswordInput,
+                                     label='Confirm password:')
 
     def clean_username(self):
+        error_messege = "This username is already taken.Please choose another."
         try:
             user = User.objects.get(username=self.cleaned_data['username'])
         except User.DoesNotExist:
             return self.cleaned_data['username']
-        raise forms.ValidationError("This username is already taken. Please choose another.")
+        raise forms.ValidationError(error_messege)
 
     def clean(self):
-        if 'password' in self.cleaned_data and 'password_check' in self.cleaned_data:
-            if self.cleaned_data['password_check'] != self.cleaned_data['password']:
+        if 'password' in self.cleaned_data and
+           'password_check' in self.cleaned_data:
+            if self.cleaned_data['password_check'] !=
+               self.cleaned_data['password']:
                 raise forms.ValidationError("The passwords are different.")
         return self.cleaned_data
 
@@ -44,11 +49,12 @@ class SignupForm(forms.Form):
 class CreateEventForm(forms.Form):
     title = forms.CharField(label="Name:")
     start_time = forms.DateTimeField(label='When?', widget=SelectDateWidget)
-    end_time = forms.DateTimeField(label="End:", widget=SelectDateWidget)  
-    location = forms.CharField(label="Where?", required=False)  
-    description = forms.CharField(label="Add more info", widget=forms.Textarea, required=False)
+    end_time = forms.DateTimeField(label="End:", widget=SelectDateWidget)
+    location = forms.CharField(label="Where?", required=False)
+    description = forms.CharField(label="Add more info",
+                                  widget=forms.Textarea, required=False)
     group = forms.CharField(label='Group:', required=False)
-    
+
     def clean(self):
         return self.cleaned_data
 
@@ -56,7 +62,7 @@ class CreateEventForm(forms.Form):
 class CreateGroupForm(forms.Form):
     name = forms.CharField(label="Name:")
     users = forms.CharField(label='Members:', required=False)
-    
+
     def clean(self):
         return self.cleaned_data
 
@@ -95,7 +101,8 @@ class CalendarForm(HTMLCalendar):
 
     def group_by_day(self, events):
         time = lambda event: event.start_time
-        return dict([(day, list(events)) for day, events in groupby(event, time)])
+        return dict([(day, list(events)) f
+                    for day, events in groupby(event, time)])
 
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
