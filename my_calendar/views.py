@@ -10,7 +10,11 @@ from datetime import datetime, timedelta, date
 from django.views.decorators.http import require_http_methods
 from itertools import groupby
 from my_calendar.models import Event, Comment
-from my_calendar.forms import LoginForm, SignupForm, CreateEventForm, CreateGroupForm, PostCommentForm
+from my_calendar.forms import LoginForm,
+                              SignupForm,
+                              CreateEventForm,
+                              CreateGroupForm,
+                              PostCommentForm
 
 
 def earlier_date(date1, date2):
@@ -23,9 +27,12 @@ def earlier_date(date1, date2):
 def homepage(request): 
     if request.user.is_authenticated():
         now = datetime.utcnow().replace(tzinfo=utc)
-        upcoming_events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=7)]
-        news = [comment for event in request.user.events.all() for comment in event.comments.all()
-                if comment.created > earlier_date((now - timedelta(days=30)), request.user.last_login)]
+        upcoming_events = [event for event in request.user.events.all()
+                                 if event.start_time - now < timedelta(days=7)]
+        news = [comment for event in request.user.events.all()
+                        for comment in event.comments.all()
+                        if comment.created > earlier_date((now - timedelta(days=30)),
+                        request.user.last_login)]
     else:
         upcoming_events = []
         news = []
@@ -43,7 +50,8 @@ def eventpage(request, id):
 def eventslist(request):
     if request.user.is_authenticated():
         now = datetime.utcnow().replace(tzinfo=utc)
-        events = [event for event in request.user.events.all() if event.start_time - now < timedelta(days=30)]
+        events = [event for event in request.user.events.all()
+                        if event.start_time - now < timedelta(days=30)]
     else:
         events = []
     time_function = lambda event: event.start_time
@@ -211,4 +219,3 @@ class CreateGroupView(FormView):
         group.user_set.add(request.user)
         group.save()
         return HttpResponseRedirect('/groups/' + str(group.id) + '/')
-
